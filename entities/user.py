@@ -32,8 +32,6 @@ class User:
         # Hacer una consulta SQL que retorne los elementos que coincidan con esa cuenta
         # Retornar true si la coleccion contiene 1 o mas elementos. Si contiene cero, retorna false
 
-        #FALTA HACER LA VALIDACION
-
         connection = get_connection()
         cursor = connection.cursor()
 

@@ -9,7 +9,13 @@ def register_user():
     curp = input("CURP: ")
     password = getpass("Contraseña: ")
 
+    # Validar si ya existe la cuenta
+    if User.check_account_exists(account):
+        print("La cuenta ya existe!!!")
+        return
+
     User.insert(name, curp, account, password)
+    print("Usuario registrado correctamente :)")
 
 
 # Funcion para hacer un listado de usuarios de la base de datos
