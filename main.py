@@ -18,6 +18,16 @@ def register_user():
     print("Usuario registrado correctamente :)")
 
 
+# Funcion para agregar una tarjeta a la base de datos
+def register_card():
+    number = getpass("Numero de tarjeta: ")
+    bank = input("Banco: ")
+    card_type = input("Tipo de tarjeta: ")
+
+    User.insert_card(number, bank, card_type)
+    print("Tarjeta registrada correctamente :)")
+
+
 # Funcion para hacer un listado de usuarios de la base de datos
 def view_users():
     users = User.get_users()
@@ -29,6 +39,20 @@ def view_users():
     print("\n--- Lista de Usuarios ---")
     for user in users:
         print(f"Nombre: {user.name} | Cuenta: {user.account} | CURP: {user.curp}")
+    print("-------------------------\n")
+
+
+# Funcion para hacer un listado de tarjetas de la base de datos
+def view_cards():
+    cards = User.get_cards()
+    
+    if not cards:
+        print("\nNo hay tarjetas registradas.")
+        return
+
+    print("\n--- Lista de Tarjetas ---")
+    for card in cards:
+        print(f"Numero: {card['number']} | Banco: {card['bank']} | Tipo: {card['card_type']}")
     print("-------------------------\n")
 
 
@@ -53,11 +77,17 @@ if __name__ == "__main__":
     if login():
         print("Seleccione una opcion del menu")
         print("1.- Registrar un usuario")
-        print("2.- Consultar usuarios")
+        print("2.- Registrar una tarjeta")
+        print("3.- Consultar usuarios")
+        print("4.- Consultar tarjetas")
         option = int(input())
         if option == 1:
             register_user()
         elif option == 2:
+            register_card()
+        elif option == 3:
             view_users()
+        elif option == 4:
+            view_cards()
     else:
         print("Credenciales invalidas")

@@ -27,6 +27,21 @@ class User:
         connection.close()
 
 
+    # Metodo para agregar una tarjeta a la base de datos
+    def insert_card(number, bank, card_type):
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        number_encrypt = encrypt(number)
+
+        sql = "INSERT INTO card (number, bank, card_type) VALUES (%s, %s, %s)"
+        cursor.execute(sql, (number_encrypt, bank, card_type))
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+
     # Metodo para verificar si se duplica un usuario
     def check_account_exists(account):
         # Hacer una consulta SQL que retorne los elementos que coincidan con esa cuenta
@@ -67,6 +82,26 @@ class User:
             )
             for row in rows
         ]
+    
+
+    # Metodo para obtener las tarjetas de la base de datos
+    def get_cards():
+        connection = get_connection()
+        cursor = connection.cursor(dictionary = True)
+        sql = "SELECT id_card, number, bank, card_type FROM card"
+
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        return [
+            {
+                "id": row["id_card"],
+                "number": decrypt(row["number"]),
+                "bank": row["bank"],
+                "card_type": row["card_type"]
+            }
+            for row in rows
+        ]
 
 
     # Metodo para saber el usuario por su cuenta
@@ -88,4 +123,3 @@ class User:
                 curp = decrypt(row["curp"]),
                 password = decrypt(row["password"])
             )
-
