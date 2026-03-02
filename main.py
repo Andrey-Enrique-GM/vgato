@@ -1,4 +1,5 @@
 from entities.user import User
+from entities.card import Card
 from getpass import getpass
 
 
@@ -24,7 +25,7 @@ def register_card():
     bank = input("Banco: ")
     card_type = input("Tipo de tarjeta: ")
 
-    User.insert_card(number, bank, card_type)
+    Card.insert_card(number, bank, card_type)
     print("Tarjeta registrada correctamente :)")
 
 
@@ -44,7 +45,7 @@ def view_users():
 
 # Funcion para hacer un listado de tarjetas de la base de datos
 def view_cards():
-    cards = User.get_cards()
+    cards = Card.get_cards()
     
     if not cards:
         print("\nNo hay tarjetas registradas.")
